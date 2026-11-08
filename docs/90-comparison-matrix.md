@@ -20,6 +20,10 @@
 | Open Roberta | O | Python/Java/C/C++ generated | O | 일반 reverse X | generated source 중심 | multi-target generator |
 | LEGO SPIKE Prime | O | Python | 동일 프로젝트 변환 미확인 | 미확인 | 별도 경험 | parallel/progressive |
 | BlockPython 2026 | O | Python | 논문상 O | 논문상 O | 학습 단계형 | 연구 prototype |
+| Blockly | O | 생성 대상 언어 문자열 | O generator | **X 기본 제공 아님** | host app 의존 | library baseline |
+| MIT App Inventor | O | YAIL은 내부/generated 표현 | 내부 생성 O | 일반 reverse X | 사용자 text mode X | block-native + internal IR |
+| Snap! | O | 사용자 text mode가 핵심 아님 | 해당 없음 | X | X | advanced block-native |
+| Scratch Editor | O | X | 해당 없음 | X | X | block-native VM/AST |
 
 ## 2. 내부 구조
 
@@ -38,6 +42,10 @@
 | Open Roberta | Phrase/program model + visitors | NEPO/internal program model | text→NEPO decompiler 없음 |
 | LEGO SPIKE | 별도 modalities | 제품 내부 비공개 | 변환 대상 아님 |
 | BlockPython | 논문상 bidirectional engine | 상세 공개 부족 | 연구 문서 추가 확인 필요 |
+| Blockly | workspace + CodeGenerator + serialization | block workspace | arbitrary text reverse는 host app이 구현 |
+| MIT App Inventor | component model + blocks → YAIL → companion/build | project/block model | 내부 YAIL을 사용자 text mode로 보지 않음 |
+| Snap! | block morph + Process/Context interpreter + serializer | block/project object model | text roundtrip이 목표가 아님 |
+| Scratch Editor | scratch-blocks events → VM target block AST/state | block project + VM state | VM AST는 text parser AST가 아님 |
 
 ## 3. 구현 투명성
 
@@ -57,8 +65,25 @@
 | Tinkercad | 비공개 | UX 높음 |
 | LEGO SPIKE | 비공개 | pedagogy progression 중심 |
 | BlockPython | 논문 중심 | research design 높음 |
+| Blockly | **O** | **매우 높음 — editor core 기준점** |
+| MIT App Inventor | **O** | **매우 높음 — app builder + internal IR** |
+| Snap! | **O** | **매우 높음 — block language/runtime** |
+| Scratch Editor | **O** | **매우 높음 — GUI/VM/runtime 분리** |
 
-## 4. 주관적 비교 점수
+## 4. 블록 네이티브 아키텍처 기준군
+
+아래 4개는 text round-trip 점수로 줄 세우면 오히려 분석이 왜곡된다.
+
+| 서비스 | 주로 볼 것 | 양방향 연구에 주는 교훈 |
+|---|---|---|
+| Blockly | workspace·event·serialization·generator | generator와 reverse parser는 별개 |
+| MIT App Inventor | Designer↔Blocks↔YAIL↔Companion/build | 내부 textual IR ≠ 사용자 text modality |
+| Snap! | custom blocks·Process/Context·serializer | 텍스트 전환 없이도 abstraction을 높일 수 있음 |
+| Scratch Editor | block events↔VM target state·GUI/runtime/storage 분리 | 내부 AST ≠ source parser AST |
+
+따라서 이 기준군은 아래 ‘주관적 비교 점수’의 역변환 점수 경쟁에서 제외한다.
+
+## 5. 주관적 비교 점수
 
 5점 만점. **제품 우열 점수가 아니라 이 연구 주제에서 참고 가치**입니다.
 
@@ -81,7 +106,16 @@
 
 * 논문 보고 기준.
 
-## 5. 목적별 1순위
+## 6. 목적별 1순위
+
+### production block editor core
+**Blockly / Scratch Editor**
+
+### component 기반 app builder와 내부 IR
+**MIT App Inventor**
+
+### 고급 block language/runtime
+**Snap!**
 
 ### compiler/decompiler 설계
 **MakeCode / PXT**
@@ -110,7 +144,7 @@
 ### learning analytics
 **BlockPython 2026**
 
-## 6. 우리가 만들 시스템을 가정한 추천 조합
+## 7. 우리가 만들 시스템을 가정한 추천 조합
 
 한 제품을 복제하는 것보다 다음 조합이 더 좋습니다.
 

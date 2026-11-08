@@ -6,7 +6,7 @@
 
 ## 서비스별 독립 심층 분석 (2026-11-08 확대)
 
-**[studies/ 서비스별 분석 인덱스](studies/README.md)**에서 각 제품 폴더로 이동할 수 있습니다. 총 14개 서비스·엔진을 개별 폴더로 분리했으며, 공개 소스 확인이 가능한 6개는 실제 파일 경로를 따라가는 `SOURCE-MAP.md`를 추가했습니다. 화면·버튼·UX·기술적 상태 흐름과 실패 해결 방식을 정리하되, 직접 UI를 조작해 확인하지 않은 동작은 미검증으로 표시합니다.
+**[studies/ 서비스별 분석 인덱스](studies/README.md)**에서 각 제품 폴더로 이동할 수 있습니다. 총 18개 서비스·엔진을 개별 폴더로 분리했으며, 공개 소스 확인이 가능한 10개는 실제 파일 경로를 따라가는 `SOURCE-MAP.md`를 추가했습니다. 화면·버튼·UX·기술적 상태 흐름과 실패 해결 방식을 정리하되, 직접 UI를 조작해 확인하지 않은 동작은 미검증으로 표시합니다.
 
 ## 먼저 결론
 
@@ -24,6 +24,7 @@
 | 하이브리드 전환형 | VEXcode Switch | 블록 구조 안에 Python 텍스트 명령을 단계적으로 섞음 |
 | 병렬/단계형 모달리티 | LEGO SPIKE Prime, PictoBlox | 블록과 Python을 모두 제공하지만 동일 프로그램의 왕복 변환은 핵심이 아님 |
 | 다중 타깃 코드 생성 | Open Roberta Lab | NEPO/Blockly 프로그램을 robot별 Python/Java/C/C++ visitor로 생성 |
+| 블록 네이티브/내부 IR 기준군 | Blockly, MIT App Inventor, Scratch, Snap! | 내부 AST·IR·generator가 있어도 사용자 text mode나 text→blocks 역변환과는 별개임을 보여주는 기준 사례 |
 | 연구 프로토타입 | BlockPython (2026) | 양방향 블록↔Python에 학습 과정 증거와 AI 지원을 결합 |
 
 가장 중요한 기술적 교훈은 **Blockly 자체에는 임의의 텍스트 코드를 블록으로 되돌리는 범용 기능이 없다는 것**입니다. Blockly 공식 문서는 블록에서 텍스트 코드를 생성하는 code generator와, 블록 워크스페이스 상태를 JSON/XML로 저장·복원하는 serialization을 서로 다른 기능으로 다룹니다. 진짜 역변환을 만들려면 별도의 parser/decompiler가 필요합니다.
@@ -36,6 +37,7 @@
 - [양방향 변환 아키텍처 패턴](docs/02-architecture-patterns.md)
 - [블록↔텍스트 UI/UX 패턴](docs/03-ui-ux-patterns.md)
 - [Round-trip Benchmark](docs/04-roundtrip-benchmark.md)
+- [증거 원장과 서비스별 분석 표준](docs/05-evidence-ledger.md)
 - [종합 비교표](docs/90-comparison-matrix.md)
 - [직접 설계할 때 가져갈 원칙](docs/99-design-takeaways.md)
 
@@ -54,6 +56,10 @@
 - [LEGO Education SPIKE](docs/platforms/lego-spike.md)
 - [BlockPython (2026 연구 프로토타입)](docs/platforms/blockpython-2026.md)
 - [Blockly 자체를 기준점으로 보기](docs/platforms/blockly-baseline.md)
+- [Blockly 독립 소스 분석](studies/blockly/README.md)
+- [MIT App Inventor](studies/mit-app-inventor/README.md)
+- [Snap!](studies/snap/README.md)
+- [Scratch Editor](studies/scratch-editor/README.md)
 
 ## 빠른 선택 가이드
 
@@ -69,6 +75,12 @@
 4. **MakeCode** — 같은 프로그램을 Blocks/JavaScript/Python 관점으로 오가게 함
 5. **PictoBlox / SPIKE** — 연령·숙련도별 coding environment 단계화
 
+### "블록 네이티브 아키텍처"를 연구하려면
+1. **Scratch Editor** — workspace event → VM AST/state → runtime 분리
+2. **MIT App Inventor** — Designer/component model → blocks → YAIL → live/build
+3. **Snap!** — block-native interpreter와 고급 언어 추상화
+4. **Blockly** — workspace/serialization/code generator의 책임 경계
+
 ### "하드웨어용 코드 생성 구조"를 연구하려면
 1. **Open Roberta** — 공통 program model + robot별 language visitor
 2. **mBlock 5** — target-specific upload transcoding
@@ -77,6 +89,8 @@
 
 ### 피해야 할 오해
 - Blockly 사용 = 양방향 변환 지원 → **아님**
+- 내부 AST/IR/YAIL 존재 = 사용자 텍스트 코딩 모드 존재 → **아님**
+- VM 내부 AST 존재 = text parser/decompiler 존재 → **아님**
 - Blocks + Text 동시 표시 = 텍스트 수정도 블록에 반영 → **아님**
 - "Python 지원" = 기존 블록 프로젝트를 Python에서 수정하고 다시 블록으로 복원 → **제품마다 다름**
 - "블록을 Python으로 변환" = Python editor로 프로젝트 전체가 이관됨 → **PictoBlox처럼 upload용 코드 생성만 되는 경우도 있음**

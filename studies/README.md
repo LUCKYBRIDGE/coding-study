@@ -5,9 +5,10 @@
 
 ## 현재 범위
 
-- 14개 서비스·엔진별 독립 폴더
-- 공개 소스를 확인한 6개 폴더에 별도 `SOURCE-MAP.md`
-- 비공개 제품 8개는 공개 기능과 미확인 내부 구현을 분리
+- 18개 서비스·엔진별 독립 폴더
+- 공개 소스를 확인한 10개 폴더에 별도 `SOURCE-MAP.md`
+- 비공개/핵심 비공개 제품은 공개 기능과 미확인 내부 구현을 분리
+- 공통 주장 상태와 evidence record 형식은 [증거 원장](../docs/05-evidence-ledger.md)에 통일
 
 ### 양방향 구현과 에디터 엔진
 
@@ -16,6 +17,15 @@
 - [blockpy-blockmirror](./blockpy-blockmirror/README.md) · [실제 소스 지도](./blockpy-blockmirror/SOURCE-MAP.md)
 - [pencil-code](./pencil-code/README.md) · [실제 소스 지도](./pencil-code/SOURCE-MAP.md)
 - [codeorg-droplet](./codeorg-droplet/README.md) · [실제 소스 지도](./codeorg-droplet/SOURCE-MAP.md)
+
+### 블록 네이티브·기반 엔진
+
+- [blockly](./blockly/README.md) · [실제 소스 지도](./blockly/SOURCE-MAP.md)
+- [mit-app-inventor](./mit-app-inventor/README.md) · [실제 소스 지도](./mit-app-inventor/SOURCE-MAP.md)
+- [snap](./snap/README.md) · [실제 소스 지도](./snap/SOURCE-MAP.md)
+- [scratch-editor](./scratch-editor/README.md) · [실제 소스 지도](./scratch-editor/SOURCE-MAP.md)
+
+이 네 항목은 ‘텍스트 전환 기능이 많아서’가 아니라 **블록 editor·내부 IR/AST·runtime·persistence의 책임 경계**를 비교하기 위한 기준군입니다.
 
 ### 다중 하드웨어·코드 생성
 
@@ -56,13 +66,14 @@
 - **L3 함수·이벤트 추적:** 버튼별 핸들러→상태→저장까지 소스 줄로 검증
 - **L4 재현/측정:** 실제 화면·변환·예외·성능·모바일 시험
 
-현재 공개 소스 6개는 **L2 + 일부 L3**, 비공개 8개는 **L1** 수준입니다. L4 실험은 아직 수행하지 않았습니다. 과장된 '완전 분석' 표기를 금지합니다.
+현재 공개 소스 10개는 **L2 + 일부 L3**, 나머지는 주로 **L1** 수준입니다. L4 실험은 아직 수행하지 않았습니다. 과장된 '완전 분석' 표기를 금지합니다.
 
 ## 기존 공통 분석
 
 - [변환 엔진 아키텍처](../docs/02-architecture-patterns.md)
 - [전환 UI/UX 패턴](../docs/03-ui-ux-patterns.md)
 - [왕복 변환 벤치마크](../docs/04-roundtrip-benchmark.md)
+- [증거 원장/분석 표준](../docs/05-evidence-ledger.md)
 - [종합 비교](../docs/90-comparison-matrix.md)
 
 ## 소스와 비공개 제품을 구분하는 규칙

@@ -2,7 +2,8 @@
 
 > 조사 기준일: 2026-11-08  
 > 판정: **블록 → 텍스트 generator 프레임워크. 범용 텍스트 → 블록 역변환은 기본 제공하지 않음**  
-> 신뢰도: **A**
+> 신뢰도: **A**  
+> 현행 공개 소스 기준: **RaspberryPiFoundation/blockly @ 7833379192e623086f3767ec3835b9acfd49e43c**
 
 ## 왜 먼저 봐야 하나
 
@@ -133,6 +134,10 @@ type Project = {
 ```
 
 즉 **실행 의미 상태**와 **블록 편집기 UI 상태**를 같은 것으로 취급하지 않습니다.
+
+## 2026 소스 추적 보강
+
+서비스별 L2/L3 분석은 [studies/blockly/README.md](../../studies/blockly/README.md)와 [SOURCE-MAP.md](../../studies/blockly/SOURCE-MAP.md)에 분리했습니다. 이 문서는 개념 기준점으로 유지하고, 실제 파일 경로·commit 기반 검증은 studies 쪽에서 갱신합니다.
 
 ## Sources
 

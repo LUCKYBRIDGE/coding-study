@@ -116,6 +116,37 @@
 - **판정: progressive modalities**
 - 신뢰도 B
 
+### G. 블록 네이티브 / 내부 표현 기준군
+
+이 그룹은 block↔text 전환 사례가 아니라 **“내부 표현이 있다는 것”과 “사용자에게 두 표현을 제공한다는 것”을 분리하기 위한 기준군**이다.
+
+#### Blockly
+- workspace serialization과 code generator는 분리된 기능
+- block→source string 생성은 제공하지만 arbitrary source→blocks parser/decompiler는 기본 제공하지 않음
+- **판정: block editor/library baseline**
+- 신뢰도 A
+
+#### MIT App Inventor
+- Designer component model + Blocks Editor
+- blocks에서 YAIL 생성 후 Companion/live 또는 build pipeline으로 연결
+- YAIL은 내부/generated 표현이며 기본 사용자 text IDE가 아님
+- **판정: block-native + internal IR/codegen**
+- 신뢰도 A
+
+#### Snap!
+- block-native interpreter와 project serializer
+- first-class lists/procedures/continuations, custom blocks로 블록 언어 자체의 추상화를 확장
+- text로 전환하지 않고도 고급 CS 개념을 제공하는 대안 사례
+- **판정: advanced block-native language**
+- 신뢰도 A
+
+#### Scratch Editor
+- scratch-blocks workspace event → VM target block AST/state → runtime
+- VM AST는 text parser AST가 아니라 block-native execution state
+- GUI/VM/render/storage를 package 단위로 분리
+- **판정: block-native VM architecture**
+- 신뢰도 A
+
 ### G. 최신 연구 프로토타입
 
 #### BlockPython (2026)
@@ -144,9 +175,9 @@ Israel-Fishelson et al.은 도구를 다음처럼 구분했습니다.
 2. **PictoBlox / SPIKE**처럼 연령·숙련도에 따라 coding environment 자체를 단계화
 3. **Open Roberta / Mind+ / mBlock**처럼 hardware target별 code generation을 학습 연결고리로 활용
 
-따라서 현재 분석에서는 one-way / dual-modality만으로는 부족하고 **hybrid, progressive modalities, multi-target generation**을 별도 축으로 둡니다.
+따라서 현재 분석에서는 one-way / dual-modality만으로는 부족하고 **hybrid, progressive modalities, multi-target generation, block-native/internal-IR baseline**을 별도 축으로 둡니다.
 
-## 가장 연구 가치가 높은 5개
+## 양방향·전환 관점에서 가장 연구 가치가 높은 5개
 
 ### 1. MakeCode / PXT
 "어떻게 compiler architecture로 양방향을 제품급으로 만드는가"를 보기 가장 좋습니다.
@@ -162,6 +193,10 @@ Israel-Fishelson et al.은 도구를 다음처럼 구분했습니다.
 
 ### 5. Open Roberta
 "하나의 교육용 program model을 여러 robot·언어 target으로 어떻게 확장하는가"를 보기 좋습니다.
+
+## 별도 아키텍처 기준군
+
+양방향 자체의 5개 우선순위와 별개로, production block editor 구조를 이해하려면 **Blockly / Scratch Editor / MIT App Inventor / Snap!**을 함께 본다. 특히 ‘AST/IR이 있으니 text→blocks도 될 것’이라는 추론을 막는 데 유용하다.
 
 ## 기준점: Blockly
 
