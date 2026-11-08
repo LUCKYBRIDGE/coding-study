@@ -147,7 +147,7 @@
 - **판정: block-native VM architecture**
 - 신뢰도 A
 
-### G. 최신 연구 프로토타입
+### H. 최신 연구 프로토타입
 
 #### BlockPython (2026)
 - 논문상 blocks ↔ Python bidirectional translation
