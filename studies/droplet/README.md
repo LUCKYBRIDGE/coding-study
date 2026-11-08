@@ -81,4 +81,4 @@
 - **미확인:** 모든 화면의 현재 버튼 좌표·버튼 명칭·클릭 결과·모바일 동작을 실제로 한 번씩 시험한 것은 아님
 - **금지:** 공개 소스에 없는 백엔드 테이블명·내부 API·알고리즘을 추정해 실제 구조처럼 작성
 
-관련 기존 상세 분석: [기존 Droplet Editor 기술 분석](../../docs/platforms/codeorg-droplet.md)
+관련 기존 상세 분석: [Droplet 원본 설계 문서](https://github.com/droplet-editor/droplet/blob/master/DESIGN.md)
