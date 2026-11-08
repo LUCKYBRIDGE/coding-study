@@ -15,10 +15,11 @@
 | 컴파일러/디컴파일러형 양방향 | Microsoft MakeCode / PXT | Blocks·Python을 중간 의미 계층인 Static TypeScript 쪽으로 모으고 다시 Blocks/Python으로 디컴파일 |
 | 텍스트 보존 오버레이형 양방향 | Droplet, Pencil Code, Code.org App Lab/Game Lab | 원문 텍스트를 정본으로 두고 소스 위치에 블록/소켓 마크업을 덧씌움 |
 | AST 재구성형 양방향 | BlockPy / BlockMirror | Python → parser AST → Blockly XML, Blockly → Python generator |
-| 편집 가능한 단방향 | EduBlocks | 블록 변화가 텍스트에 반영되지만 텍스트 변화의 블록 복귀는 핵심 기능이 아님 |
-| 단방향 변환 + 텍스트 IDE | Tinkercad Circuits, mBlock 5의 여러 장치 모드 | 블록에서 C++/Python을 생성해 보여주고 이후 텍스트로 넘어감 |
+| 편집 가능한 단방향 | EduBlocks, Mind+ | 블록 변화가 텍스트에 반영되고 텍스트 편집도 가능하지만 일반적인 text→blocks 역변환은 확인되지 않음 |
+| 단방향 변환 + 텍스트 IDE | Tinkercad Circuits, mBlock 5, PictoBlox | 블록에서 C++/Python을 생성하거나 별도 텍스트 환경으로 넘어감 |
 | 하이브리드 전환형 | VEXcode Switch | 블록 구조 안에 Python 텍스트 명령을 단계적으로 섞음 |
-| 병렬 모달리티 | LEGO SPIKE Prime | 블록과 Python을 모두 제공하지만 동일 프로그램의 왕복 변환은 확인되지 않음 |
+| 병렬/단계형 모달리티 | LEGO SPIKE Prime, PictoBlox | 블록과 Python을 모두 제공하지만 동일 프로그램의 왕복 변환은 핵심이 아님 |
+| 다중 타깃 코드 생성 | Open Roberta Lab | NEPO/Blockly 프로그램을 robot별 Python/Java/C/C++ visitor로 생성 |
 | 연구 프로토타입 | BlockPython (2026) | 양방향 블록↔Python에 학습 과정 증거와 AI 지원을 결합 |
 
 가장 중요한 기술적 교훈은 **Blockly 자체에는 임의의 텍스트 코드를 블록으로 되돌리는 범용 기능이 없다는 것**입니다. Blockly 공식 문서는 블록에서 텍스트 코드를 생성하는 code generator와, 블록 워크스페이스 상태를 JSON/XML로 저장·복원하는 serialization을 서로 다른 기능으로 다룹니다. 진짜 역변환을 만들려면 별도의 parser/decompiler가 필요합니다.
@@ -29,6 +30,8 @@
 - [분석 방법과 판정 기준](docs/00-method-and-criteria.md)
 - [전체 지형과 비교 분류](docs/01-landscape.md)
 - [양방향 변환 아키텍처 패턴](docs/02-architecture-patterns.md)
+- [블록↔텍스트 UI/UX 패턴](docs/03-ui-ux-patterns.md)
+- [Round-trip Benchmark](docs/04-roundtrip-benchmark.md)
 - [종합 비교표](docs/90-comparison-matrix.md)
 - [직접 설계할 때 가져갈 원칙](docs/99-design-takeaways.md)
 
@@ -38,9 +41,12 @@
 - [Pencil Code / Droplet](docs/platforms/pencil-code.md)
 - [BlockPy / BlockMirror](docs/platforms/blockpy-blockmirror.md)
 - [EduBlocks](docs/platforms/edublocks.md)
+- [Mind+](docs/platforms/mindplus.md)
 - [mBlock 5](docs/platforms/mblock5.md)
+- [PictoBlox](docs/platforms/pictoblox.md)
 - [VEXcode Switch](docs/platforms/vexcode-switch.md)
 - [Tinkercad Circuits](docs/platforms/tinkercad-circuits.md)
+- [Open Roberta Lab](docs/platforms/open-roberta.md)
 - [LEGO Education SPIKE](docs/platforms/lego-spike.md)
 - [BlockPython (2026 연구 프로토타입)](docs/platforms/blockpython-2026.md)
 - [Blockly 자체를 기준점으로 보기](docs/platforms/blockly-baseline.md)
@@ -57,11 +63,19 @@
 2. **Pencil Code** — 블록 자체가 실제 텍스트 문법과 매우 가깝게 보임
 3. **BlockPy** — 블록·텍스트 동시 화면(split view)
 4. **MakeCode** — 같은 프로그램을 Blocks/JavaScript/Python 관점으로 오가게 함
+5. **PictoBlox / SPIKE** — 연령·숙련도별 coding environment 단계화
+
+### "하드웨어용 코드 생성 구조"를 연구하려면
+1. **Open Roberta** — 공통 program model + robot별 language visitor
+2. **mBlock 5** — target-specific upload transcoding
+3. **Mind+** — block edit와 실시간 hardware code display
+4. **Tinkercad** — Blocks → Blocks+Text → Text 단계
 
 ### 피해야 할 오해
 - Blockly 사용 = 양방향 변환 지원 → **아님**
 - Blocks + Text 동시 표시 = 텍스트 수정도 블록에 반영 → **아님**
 - "Python 지원" = 기존 블록 프로젝트를 Python에서 수정하고 다시 블록으로 복원 → **제품마다 다름**
+- "블록을 Python으로 변환" = Python editor로 프로젝트 전체가 이관됨 → **PictoBlox처럼 upload용 코드 생성만 되는 경우도 있음**
 - 코드가 왕복되면 완전히 동일한 프로젝트가 복구됨 → **아님**. 블록 ID, 배치, 포맷, 주석 등은 손실될 수 있음
 
 ## 조사 방식
