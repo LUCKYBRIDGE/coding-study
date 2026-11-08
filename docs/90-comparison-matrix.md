@@ -12,9 +12,12 @@
 | Pencil Code | O | CoffeeScript/JS/CSS/HTML | O | O | toggle | text-overlay 양방향 |
 | BlockPy / BlockMirror | O | Python | O | O | **O split** | AST 양방향 |
 | EduBlocks | O | Python/HTML 등 | O realtime | 현재 근거상 X | O/유사 | editable one-way |
+| Mind+ | O | Python/MicroPython 등 | O realtime | 현재 근거상 X | code area | editable one-way |
 | mBlock 5 | O | Python 등 | O | 일반 역변환 미확인 | preview/tab | one-way + parallel IDE |
+| PictoBlox | O | Python/C++ | hardware upload에서 O | X/미확인 | 별도 환경 | one-way + progressive |
 | VEXcode Switch | O | Python | block→Switch/text | arbitrary reverse X | **한 화면 hybrid** | hybrid transition |
-| Tinkercad Circuits | O | Arduino C++ | O realtime | pure text에서 X | Blocks+Text | editable one-way |
+| Tinkercad Circuits | O | Arduino C++ | O realtime | pure text에서 일반 reverse X | Blocks+Text | editable one-way |
+| Open Roberta | O | Python/Java/C/C++ generated | O | 일반 reverse X | generated source 중심 | multi-target generator |
 | LEGO SPIKE Prime | O | Python | 동일 프로젝트 변환 미확인 | 미확인 | 별도 경험 | parallel/progressive |
 | BlockPython 2026 | O | Python | 논문상 O | 논문상 O | 학습 단계형 | 연구 prototype |
 
@@ -27,9 +30,12 @@
 | Pencil Code | Droplet | text | Droplet parser 범위 |
 | BlockMirror | parser AST ↔ Blockly | Python source string | raw code block |
 | EduBlocks | generator 중심으로 보임 | block state 추정 | reverse 근거 부족 |
+| Mind+ | target code generator | block project 중심으로 보임 | text→block 일반 경로 미확인 |
 | mBlock | target transcoder | block project + target template | text→block 일반 경로 없음 |
+| PictoBlox | hardware upload generator + 별도 text env | environment별 상태 | block→Py Editor project migration 안 됨 |
 | VEX Switch | heterogeneous block AST | block tree + Python text islands | text island로 유지 |
 | Tinkercad | generator | block project → C++ | Text 전환 후 block 복구 안 함 |
+| Open Roberta | Phrase/program model + visitors | NEPO/internal program model | text→NEPO decompiler 없음 |
 | LEGO SPIKE | 별도 modalities | 제품 내부 비공개 | 변환 대상 아님 |
 | BlockPython | 논문상 bidirectional engine | 상세 공개 부족 | 연구 문서 추가 확인 필요 |
 
@@ -42,8 +48,11 @@
 | Code.org | **O** | 매우 높음 |
 | Pencil Code | **O** | 높음 |
 | BlockMirror | **O** | 매우 높음 |
+| Open Roberta | **O** | **매우 높음 — multi-target generator** |
 | EduBlocks current core | 확인 어려움 | 중간 |
+| Mind+ | 핵심 editor 비공개 | hardware UX 중심 |
 | mBlock | 핵심 editor 비공개 | UX/extension 구조 중심 |
+| PictoBlox | 핵심 editor 비공개 | progression / hardware UX 중심 |
 | VEXcode | 비공개 | UX 매우 높음 |
 | Tinkercad | 비공개 | UX 높음 |
 | LEGO SPIKE | 비공개 | pedagogy progression 중심 |
@@ -61,9 +70,12 @@
 | Pencil Code | 4 | 5 | 5 | 4 | **5** |
 | Code.org App/Game Lab | 4 | 5 | 4 | 4 | **5** |
 | VEX Switch | 1 | 4 | **5** | 2 | **4** |
+| Open Roberta | 0 | 3 | 3 | **5** | **4** |
 | EduBlocks | 1 | 3 | 4 | 2 | 3 |
+| Mind+ | 1 | 2 | 4 | 2 | 3 |
 | Tinkercad | 1 | 2 | 5 | 1 | 3 |
 | mBlock | 1 | 2 | 4 | 2 | 3 |
+| PictoBlox | 0 | N/A | 4 | 1 | 3 |
 | LEGO SPIKE | 0 | N/A | 4 | 1 | 2 |
 | BlockPython | 4* | 미확인 | 5 | 2 | 4 |
 
@@ -86,8 +98,14 @@
 ### 점진적 scaffold
 **VEXcode Switch**
 
+### multi-target hardware code generation
+**Open Roberta**
+
 ### hardware + code correspondence
-**Tinkercad / mBlock**
+**Tinkercad / Mind+ / mBlock**
+
+### 수준별 환경 progression
+**PictoBlox / LEGO SPIKE**
 
 ### learning analytics
 **BlockPython 2026**
@@ -125,6 +143,18 @@ split view + 대응 highlight
 Droplet에서:
 ```
 원문/source range를 최대한 보존
+```
+
+### hardware 확장
+Open Roberta식:
+```
+core program model → target별 visitor/generator
+```
+
+### 수준별 UI
+PictoBlox/SPIKE식:
+```
+같은 핵심 개념을 연령·숙련도에 따라 다른 coding environment로 노출
 ```
 
 ### 데이터
