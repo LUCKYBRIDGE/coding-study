@@ -46,7 +46,16 @@
 - **판정: S2**
 - 신뢰도 B/C
 
-### C. 단방향 + 별도 텍스트 IDE
+#### Mind+ (DFRobot)
+- block-based programming과 code를 한 workspace에서 연결
+- 공식 사이트가 "Blocks auto-generate code"를 명시
+- 하드웨어 튜토리얼에서 block drag/drop → code text area 자동 생성 구조 확인
+- 일부 code mode에서 manual editing 가능
+- 자유 수정한 text → native block 역변환 근거는 현재 확인되지 않음
+- **판정: S2**
+- 신뢰도 B
+
+### C. 단방향 + 별도 텍스트 IDE / 환경
 
 #### mBlock 5
 - Scratch 3 계열 블록
@@ -60,11 +69,29 @@
 #### Tinkercad Circuits
 - Arduino: Blocks / Blocks + Text / Text
 - Blocks + Text에서 C++는 블록 변화에 따라 즉시 갱신
-- Text로 완전히 전환하면 되돌릴 수 없다는 경고가 알려져 있고, 공식 가이드는 C++ 자동 생성 중심
+- pure Text 전환은 code-first graduation 성격이며 일반 text→blocks decompiler가 아님
 - **판정: S2**
 - 신뢰도 B
 
-### D. 하이브리드 전환
+#### PictoBlox
+- Junior Blocks / Blocks / Py Editor / Py Notebook / Embedded C++를 별도 environment로 제공
+- 공식 FAQ는 hardware programming에서 block→Python/C++ 변환을 지원한다고 설명
+- 동시에 block code가 Python environment로 변환되는 것은 아니라고 명시
+- **판정: S1~S2 + 병렬/단계형 환경**
+- 신뢰도 B
+
+### D. 다중 타깃 코드 생성
+
+#### Open Roberta Lab
+- visual language NEPO/Blockly 기반
+- 내부 Phrase/program model에서 robot별 Python/Java/C/C++ visitor로 source 생성
+- 공개 repo에 공통 AbstractPythonVisitor와 Microbit/Spike/mBot2/EV3 등 target visitor가 존재
+- 일반 Python/C++ → NEPO blocks 역변환 decompiler는 확인되지 않음
+- expression 수준 text island인 `eval .. as ...` block도 제공
+- **판정: generator/compiler pipeline**
+- 신뢰도 A
+
+### E. 하이브리드 전환
 
 #### VEXcode Switch
 - 블록의 구조를 유지한 채 특정 블록을 Python 텍스트 박스로 하나씩 바꿈
@@ -73,7 +100,7 @@
 - **판정: 별도 H(하이브리드)**
 - 신뢰도 B
 
-### E. 블록·텍스트 병렬 제공
+### F. 블록·텍스트 병렬/단계형 제공
 
 #### LEGO Education SPIKE
 - Scratch 기반 아이콘/단어 블록
@@ -83,7 +110,13 @@
 - **판정: 병렬 모달리티**
 - 신뢰도 B
 
-### F. 최신 연구 프로토타입
+#### PictoBlox
+- 연령대에 따라 Junior Blocks → Blocks → Py Editor/Py Notebook의 progression
+- same-program round-trip보다는 환경 자체를 단계화
+- **판정: progressive modalities**
+- 신뢰도 B
+
+### G. 최신 연구 프로토타입
 
 #### BlockPython (2026)
 - 논문상 blocks ↔ Python bidirectional translation
@@ -105,9 +138,15 @@ Israel-Fishelson et al.은 도구를 다음처럼 구분했습니다.
 
 이 분류는 지금도 유용하지만 제품이 바뀌었습니다.
 
-특히 2025~2026에는 **VEX Switch처럼 블록/텍스트를 "두 화면 중 하나"로 보지 않고 한 표현 안에 섞는 전환 설계**가 눈에 띕니다. 따라서 현재 분석에서는 one-way / dual-modality만으로는 부족하고 **hybrid transition**을 별도 축으로 둡니다.
+2025~2026에는 세 가지 변화가 더 뚜렷합니다.
 
-## 가장 연구 가치가 높은 4개
+1. **VEX Switch**처럼 block/text를 같은 표현 안에 섞는 hybrid transition
+2. **PictoBlox / SPIKE**처럼 연령·숙련도에 따라 coding environment 자체를 단계화
+3. **Open Roberta / Mind+ / mBlock**처럼 hardware target별 code generation을 학습 연결고리로 활용
+
+따라서 현재 분석에서는 one-way / dual-modality만으로는 부족하고 **hybrid, progressive modalities, multi-target generation**을 별도 축으로 둡니다.
+
+## 가장 연구 가치가 높은 5개
 
 ### 1. MakeCode / PXT
 "어떻게 compiler architecture로 양방향을 제품급으로 만드는가"를 보기 가장 좋습니다.
@@ -120,6 +159,9 @@ Israel-Fishelson et al.은 도구를 다음처럼 구분했습니다.
 
 ### 4. VEX Switch
 "완전한 양방향 변환 없이도 학습 전환을 더 잘 만들 수 있는가"를 보여줍니다.
+
+### 5. Open Roberta
+"하나의 교육용 program model을 여러 robot·언어 target으로 어떻게 확장하는가"를 보기 좋습니다.
 
 ## 기준점: Blockly
 
